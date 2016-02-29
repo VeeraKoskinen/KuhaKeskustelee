@@ -5,23 +5,19 @@
  */
 package tikape.keskustelupalsta1;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.util.List;
+import java.sql.*;
+import java.util.*;
 
 /**
  *
  * @author veerakoskinen
  */
 public class ViestiDao implements Dao<Viesti, Integer> {
-    
+
     private Database data;
-    private Dao <Keskustelu, Integer> keskusteluDao;
-    
-    public ViestiDao (Database data, Dao<Keskustelu, Integer> keskusteluDao) {
+    private Dao<Keskustelu, Integer> keskusteluDao;
+
+    public ViestiDao(Database data, Dao<Keskustelu, Integer> keskusteluDao) {
         this.data = data;
         this.keskusteluDao = keskusteluDao;
     }
@@ -31,42 +27,79 @@ public class ViestiDao implements Dao<Viesti, Integer> {
         Connection connection = data.getConnection();
         PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Viesti WHERE id = ?");
         stmt.setObject(1, key);
-          
+
         ResultSet rs = stmt.executeQuery();
         boolean hasOne = rs.next();
         if (!hasOne) {
             return null;
         }
-        
+
         Integer id = rs.getInt("id"); // vielä luotava
         Integer keskustelu = rs.getInt("keskustelu");
         String nimimerkki = rs.getString("nimimerkki");
         Timestamp saapumishetki = rs.getTimestamp("saapumishetki");
         String viestisisalto = rs.getString("viestisisalto");
-        
+
         Viesti v = new Viesti(nimimerkki, saapumishetki, id, viestisisalto);
-        
-        
+
         rs.close();
         stmt.close();
         connection.close();
-        
+
         v.setKeskustelu(this.keskusteluDao.findOne(keskustelu));
-        
+
         return v;
-               
+
     }
-        
-        
 
     @Override
     public List<Viesti> findAll() throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Connection connection = data.getConnection();
+        PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Viesti");
+        ResultSet rs = stmt.executeQuery();
+
+        Map<Integer, List<Viesti>> keskustelunViestit = new HashMap<>();
+
+        List<Viesti> viestit = new ArrayList<>();
+
+        while (rs.next()) {
+
+            Integer id = rs.getInt("id");
+            
+            String nimimerkki = rs.getString("nimimerkki");
+            Timestamp saapumishetki = rs.getTimestamp("saapumishetki");
+            String viestisisalto = rs.getString("viestisisalto");
+
+            Viesti v = new Viesti(nimimerkki, saapumishetki, id, viestisisalto);
+            viestit.add(v);
+
+            Integer keskustelu = rs.getInt("keskustelu");
+            if (!keskustelunViestit.containsKey(keskustelu)) {
+                keskustelunViestit.put(keskustelu, new ArrayList<>());
+            }
+            keskustelunViestit.get(keskustelu).add(v);
+        }
+
+        rs.close();
+        stmt.close();
+        connection.close();
+
+        for (Keskustelu k : this.keskusteluDao.findAll()) {
+            if (!keskustelunViestit.containsKey(k.getId())) {
+                continue;
+            }
+
+            for (Viesti viesti : keskustelunViestit.get(k.getId())) {
+                viesti.setKeskustelu(k);
+            }
+        }
+
+        return viestit;
     }
 
     @Override
     public void delete(Integer key) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
 }

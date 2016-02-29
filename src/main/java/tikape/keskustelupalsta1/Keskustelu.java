@@ -19,8 +19,7 @@ public class Keskustelu {
         
     }
     
-    public Keskustelu(int id, String otsikko, Keskustelualue alue) {
-        this.alue = alue;
+    public Keskustelu(int id, String otsikko) {
         this.id = id;
         this.otsikko = otsikko;
     }

@@ -6,34 +6,30 @@
 package tikape.keskustelupalsta1;
 
 import static spark.Spark.*;
+import java.util.*;
 import java.sql.*;
+import spark.template.thymeleaf.ThymeleafTemplateEngine;
+import tikape.keskustelupalsta1.*;
 
 public class Main {
     
      public static void main(String[] args) throws Exception {
-          get("/rapupiirakka", (req, res) -> {
+        get("/rapupiirakka", (req, res) -> {
             return "HipHEi!";
         });
          
-//        Connection connection = DriverManager.getConnection("jdbc:sqlite:keskustelupalsta.db");
-//
-//        Statement s = connection.createStatement();
-//
-//        ResultSet rs = s.executeQuery("SELECT * FROM Keskustelualue;");
-//        
-//        while (rs.next()) {
-//            int keskusteluAlueId = rs.getInt("KeskustelualueId");
-//            String otsikko = rs.getString("Otsikko");
-//            int palstaId = rs.getInt("Palsta");
-//            
-//            System.out.println(keskusteluAlueId + " " + otsikko + " " + palstaId);
-//            //KeskustelualueId|Otsikko|Palsta
-//        }
-//        
-//        s.close();
-//        rs.close();
-//        
-//        connection.close();
+        Database database = new Database("jdbc:sqlite:keskustelupalsta.db");
+        database.setDebugMode(true);
+
+        OpiskelijaDao opiskelijaDao = new OpiskelijaDao(database);
+
+        get("/opiskelijat", (req, res) -> {
+            HashMap map = new HashMap<>();
+            map.put("opiskelijat", opiskelijaDao.findAll());
+
+            return new ModelAndView(map, "index");
+        }, new ThymeleafTemplateEngine());
+
 
      }
     

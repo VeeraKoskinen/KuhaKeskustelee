@@ -11,11 +11,15 @@ import java.sql.*;
  *
  * @author veerakoskinen
  */
-public class Database {
+public class Database<T> {
     private String databaseAddress;
+    
+    private boolean debug;
+    private Connection connection;
 
     public Database(String databaseAddress) throws ClassNotFoundException {
         this.databaseAddress = databaseAddress;
+        this.connection = DriverManager.getConnection(address);
     }
 
     public Connection getConnection() throws SQLException {

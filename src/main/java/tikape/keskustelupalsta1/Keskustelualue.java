@@ -18,10 +18,10 @@ public class Keskustelualue {
         
     } 
     
-    public Keskustelualue(int id, String otsikko, Keskustelupalsta palsta) {
+    public Keskustelualue(int id, String otsikko) {
         this.id = id;
         this.otsikko = otsikko;
-        this.palsta = palsta;
+        
     } 
     
     public void setId(int id) {
