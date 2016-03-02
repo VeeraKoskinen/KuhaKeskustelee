@@ -69,7 +69,7 @@ public class KeskustelualueDao implements Dao<Keskustelualue, Integer> {
             
             alueet.add(ka);
 
-            Integer palsta = rs.getInt("Keskustelupalsta");
+            Integer palsta = rs.getInt("Palsta");
 
             if (!palstanAlueet.containsKey(palsta)) {
                 palstanAlueet.put(palsta, new ArrayList<>());

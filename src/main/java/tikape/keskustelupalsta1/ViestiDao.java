@@ -21,6 +21,8 @@ public class ViestiDao implements Dao<Viesti, Integer> {
         this.data = data;
         this.keskusteluDao = keskusteluDao;
     }
+    
+    
 
     @Override
     public Viesti findOne(Integer key) throws SQLException {
@@ -34,11 +36,11 @@ public class ViestiDao implements Dao<Viesti, Integer> {
             return null;
         }
 
-        Integer id = rs.getInt("id"); // vielä luotava
-        Integer keskustelu = rs.getInt("keskustelu");
-        String nimimerkki = rs.getString("nimimerkki");
-        Timestamp saapumishetki = rs.getTimestamp("saapumishetki");
-        String viestisisalto = rs.getString("viestisisalto");
+        Integer id = rs.getInt("Id"); // vielä luotava
+        Integer keskustelu = rs.getInt("Keskustelu");
+        String nimimerkki = rs.getString("Nimimerkki");
+        Timestamp saapumishetki = rs.getTimestamp("Saapumishetki");
+        String viestisisalto = rs.getString("Viestisisältö");
 
         Viesti v = new Viesti(nimimerkki, saapumishetki, id, viestisisalto);
 

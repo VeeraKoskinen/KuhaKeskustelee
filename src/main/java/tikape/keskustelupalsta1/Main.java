@@ -8,29 +8,32 @@ package tikape.keskustelupalsta1;
 import static spark.Spark.*;
 import java.util.*;
 import java.sql.*;
+import spark.ModelAndView;
 import spark.template.thymeleaf.ThymeleafTemplateEngine;
 import tikape.keskustelupalsta1.*;
 
 public class Main {
-    
-     public static void main(String[] args) throws Exception {
-        get("/rapupiirakka", (req, res) -> {
-            return "HipHEi!";
-        });
-         
+
+    public static void main(String[] args) throws Exception {
+        
+
         Database database = new Database("jdbc:sqlite:keskustelupalsta.db");
         database.setDebugMode(true);
 
-        OpiskelijaDao opiskelijaDao = new OpiskelijaDao(database);
+        KeskustelupalstaDao palstaDao = new KeskustelupalstaDao(database);
+        KeskustelualueDao aluedao = new KeskustelualueDao(database, palstaDao);
+        KeskusteluDao k = new KeskusteluDao(database, aluedao);
+        ViestiDao v = new ViestiDao(database, k);
 
-        get("/opiskelijat", (req, res) -> {
+        get("/kuha", (req, res) -> {
             HashMap map = new HashMap<>();
-            map.put("opiskelijat", opiskelijaDao.findAll());
+            map.put("alueet", v.findAll());
 
             return new ModelAndView(map, "index");
         }, new ThymeleafTemplateEngine());
+        
+        
 
+    }
 
-     }
-    
 }

@@ -12,9 +12,10 @@ import java.util.*;
  *
  * @author veerakoskinen
  */
-public class KeskustelupalstaDao implements Dao <Keskustelupalsta, Integer> {
+public class KeskustelupalstaDao implements Dao<Keskustelupalsta, Integer> {
+
     private Database data;
-    
+
     public KeskustelupalstaDao(Database data) {
         this.data = data;
     }
@@ -30,7 +31,7 @@ public class KeskustelupalstaDao implements Dao <Keskustelupalsta, Integer> {
         if (!hasOne) {
             return null;
         }
-        
+
         Integer id = rs.getInt("PalstaId");
         String nimi = rs.getString("Keskustelupalstan_Nimi");
 
@@ -42,16 +43,31 @@ public class KeskustelupalstaDao implements Dao <Keskustelupalsta, Integer> {
 
         return k;
     }
-       
 
     @Override
     public List<Keskustelupalsta> findAll() throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Connection connection = data.getConnection();
+        PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Keskustelupalsta");
+
+        ResultSet rs = stmt.executeQuery();
+        List<Keskustelupalsta> palstat = new ArrayList<>();
+        while (rs.next()) {
+            Integer id = rs.getInt("PalstaId");
+            String nimi = rs.getString("Keskustelupalstan_Nimi");
+
+            palstat.add(new Keskustelupalsta(id, nimi));
+        }
+
+        rs.close();
+        stmt.close();
+        connection.close();
+
+        return palstat;
     }
 
     @Override
     public void delete(Integer key) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
 }
