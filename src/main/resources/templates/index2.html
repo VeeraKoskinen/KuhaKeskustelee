@@ -8,15 +8,10 @@
     </head>
 
     <body>
-        <h1>Kuha keskustelee</h1>
+        <h1 th:text="${alue.otsikko}"></h1>
 
         
 
-        <ul>
-            <li th:each="alue: ${alueet}">
-                <span th:text="${alue.id}">1</span> <span th:text="${alue.nimi}">esimerkki</span>
-            </li>
-        </ul>
         
         
         

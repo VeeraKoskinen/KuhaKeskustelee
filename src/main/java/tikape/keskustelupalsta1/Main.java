@@ -32,6 +32,14 @@ public class Main {
             return new ModelAndView(map, "index");
         }, new ThymeleafTemplateEngine());
         
+         get("/alue/:id", (req, res) -> {
+            int id = Integer.parseInt(req.params(":id"));
+            HashMap map = new HashMap<>();
+            map.put("alue", aluedao.findOne(id));
+
+            return new ModelAndView(map, "index2");
+        }, new ThymeleafTemplateEngine());
+        
         
 
     }

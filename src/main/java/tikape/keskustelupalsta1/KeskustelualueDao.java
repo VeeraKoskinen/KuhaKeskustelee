@@ -39,7 +39,7 @@ public class KeskustelualueDao implements Dao<Keskustelualue, Integer> {
 
         Keskustelualue ka = new Keskustelualue(id, otsikko);
 
-        Integer palsta = rs.getInt("Keskustelupalsta");
+        Integer palsta = rs.getInt("Palsta");
 
         rs.close();
         stmt.close();
