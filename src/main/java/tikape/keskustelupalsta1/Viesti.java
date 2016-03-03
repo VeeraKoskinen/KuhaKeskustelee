@@ -51,6 +51,22 @@ public class Viesti {
     public void setSaapumishetki(Timestamp saapumishetki) {
         this.saapumishetki = saapumishetki;
     }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setViestisisalto(String viestisisalto) {
+        this.viestisisalto = viestisisalto;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getViestisisalto() {
+        return viestisisalto;
+    }
     
     
     

@@ -66,16 +66,16 @@ public class ViestiDao implements Dao<Viesti, Integer> {
 
         while (rs.next()) {
 
-            Integer id = rs.getInt("id");
+            Integer id = rs.getInt("Id");
             
-            String nimimerkki = rs.getString("nimimerkki");
-            Timestamp saapumishetki = rs.getTimestamp("saapumishetki");
-            String viestisisalto = rs.getString("viestisisalto");
+            String nimimerkki = rs.getString("Nimimerkki");
+            Timestamp saapumishetki = rs.getTimestamp("Saapumishetki");
+            String viestisisalto = rs.getString("Viestisisältö");
 
             Viesti v = new Viesti(nimimerkki, saapumishetki, id, viestisisalto);
             viestit.add(v);
 
-            Integer keskustelu = rs.getInt("keskustelu");
+            Integer keskustelu = rs.getInt("Keskustelu");
             if (!keskustelunViestit.containsKey(keskustelu)) {
                 keskustelunViestit.put(keskustelu, new ArrayList<>());
             }

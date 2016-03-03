@@ -12,7 +12,7 @@ import java.util.*;
  */
 public class Keskustelupalsta {
     private int id;
-    private String keskustelupalstan_nimi;       
+    private String nimi;       
     
     public Keskustelupalsta() {
         
@@ -20,7 +20,7 @@ public class Keskustelupalsta {
     
     public Keskustelupalsta(int id, String keskustelupalsta) {
         this.id = id;
-        this.keskustelupalstan_nimi = keskustelupalsta;
+        this.nimi = keskustelupalsta;
     }
     
     public int getId() {
@@ -31,11 +31,11 @@ public class Keskustelupalsta {
         this.id = id;
     }
     
-    public String getKeskustelupalsta() {
-        return this.keskustelupalstan_nimi;
+    public String getNimi() {
+        return this.nimi;
     }
     
-    public void setKeskustelupalsta(String keskustelupalsta) {
-        this.keskustelupalstan_nimi = keskustelupalsta;
+    public void setNimi(String keskustelupalsta) {
+        this.nimi = keskustelupalsta;
     }
 }

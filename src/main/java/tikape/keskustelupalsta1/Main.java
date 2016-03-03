@@ -27,7 +27,7 @@ public class Main {
 
         get("/kuha", (req, res) -> {
             HashMap map = new HashMap<>();
-            map.put("alueet", v.findAll());
+            map.put("alueet", aluedao.findAll());
 
             return new ModelAndView(map, "index");
         }, new ThymeleafTemplateEngine());

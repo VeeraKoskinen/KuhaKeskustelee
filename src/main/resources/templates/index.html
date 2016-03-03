@@ -5,20 +5,55 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
     <head>
-        <title>Otsikko</title>
+        <title>Kuha keskustelee</title>
         <meta charset="utf-8" />
+        <style>
+            table, th, td{
+                border: 1px solid white;
+                border-collapse: collapse;
+            }
+            th, td{
+                padding: 5px;
+            }
+            th{
+                text-align: left;
+            }
+        </style>
     </head>
 
     <body>
         <h1>Kuha keskustelee</h1>
 
-        
 
-        <ul>
-            <li th:each="alue: ${alueet}">
-                <span th:text="${alue.id}">1</span> <span th:text="${alue.otsikko}">esimerkki</span>
-            </li>
-        </ul>
+
+
+
+        <table style="width:100%">
+            <tr>
+                <th>Alueet &nbsp; &nbsp; </th>
+                <th>Viestejä yhteensä &nbsp; &nbsp; </th>
+                <th>Viimeisin viesti &nbsp; &nbsp;</th>
+            </tr>
+            <ul style="list-style-type:none">
+                <li th:each="alue: ${alueet}">
+                    <tr>
+                        <td>
+                            <span th:text="${alue.id}">1</span> 
+                        </td>
+                        <td>
+                            <span th:text="${alue.otsikko}">esimerkki</span>
+                        </td>
+                        <td>
+                            <span th:text="${alue.palsta}">1</span>
+                        </td>
+                    </tr>
+                </li>
+            </ul>
+        </table>
+
+
+
+
 
 
 
