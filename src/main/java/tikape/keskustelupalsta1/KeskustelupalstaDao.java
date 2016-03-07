@@ -44,7 +44,7 @@ public class KeskustelupalstaDao implements Dao<Keskustelupalsta, Integer> {
         return k;
     }
 
-    @Override
+    
     public List<Keskustelupalsta> findAll() throws SQLException {
         Connection connection = data.getConnection();
         PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Keskustelupalsta");
@@ -68,6 +68,13 @@ public class KeskustelupalstaDao implements Dao<Keskustelupalsta, Integer> {
     @Override
     public void delete(Integer key) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    public void lisaaAlue(String otsikko) throws SQLException {
+        Connection connection = data.getConnection();
+        PreparedStatement stmt = connection.prepareStatement("INSERT INTO Keskustelualue (Otsikko, Palsta) VALUES(?,1)");
+        stmt.setString(1, otsikko);
+        stmt.executeUpdate();
     }
 
 }

@@ -8,6 +8,7 @@ package tikape.keskustelupalsta1;
 import java.sql.*;
 import java.util.*;
 
+
 /**
  *
  * @author veerakoskinen
@@ -15,9 +16,9 @@ import java.util.*;
 public class ViestiDao implements Dao<Viesti, Integer> {
 
     private Database data;
-    private Dao<Keskustelu, Integer> keskusteluDao;
+    private KeskusteluDao keskusteluDao;
 
-    public ViestiDao(Database data, Dao<Keskustelu, Integer> keskusteluDao) {
+    public ViestiDao(Database data, KeskusteluDao keskusteluDao) {
         this.data = data;
         this.keskusteluDao = keskusteluDao;
     }
@@ -54,10 +55,11 @@ public class ViestiDao implements Dao<Viesti, Integer> {
 
     }
 
-    @Override
-    public List<Viesti> findAll() throws SQLException {
+    
+    public List<Viesti> findAll(int Id) throws SQLException {
         Connection connection = data.getConnection();
-        PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Viesti");
+        PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Viesti WHERE Keskustelu = ?");
+        stmt.setInt(1, Id);
         ResultSet rs = stmt.executeQuery();
 
         Map<Integer, List<Viesti>> keskustelunViestit = new HashMap<>();
@@ -103,5 +105,7 @@ public class ViestiDao implements Dao<Viesti, Integer> {
     public void delete(Integer key) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    
+    
 
 }

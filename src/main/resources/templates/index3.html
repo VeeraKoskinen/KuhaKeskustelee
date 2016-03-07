@@ -3,24 +3,27 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
     <head>
-        <title>Otsikko</title>
+        <title>KuhaKeskustelee</title>
         <meta charset="utf-8" />
     </head>
 
     <body>
-        <h1>Kuha keskustelee</h1>
-
+        <h1>KuhaKeskustelee</h1>
+        <h2 th:text="${alue.otsikko}"></h2>
+        <h2 th:text="${keskustelu.otsikko}"></h2>
         
-
         <ul>
-            <li th:each="alue: ${alueet}">
-                <span th:text="${alue.id}">1</span> <span th:text="${alue.nimi}">esimerkki</span>
+            <li th:each="viesti: ${viestit}" th:text="${viesti.viestisisalto + viesti.nimimerkki}">
+                
             </li>
         </ul>
         
         
-        
-        
+        <form th:action="${'/alue/' + alue.id + '/keskustelu/' + keskustelu.id}" method="POST">
+            <textarea name="viestisisalto" rows="10" cols="50">kirjoita viestisi tähän</textarea>
+            <input type="text" name="nimimerkki"/>
+                <button type="submit">Lisää viesti</button>
+        </form>
 
 
     </body>

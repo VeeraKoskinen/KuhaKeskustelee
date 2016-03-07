@@ -5,6 +5,12 @@
  */
 package tikape.keskustelupalsta1;
 
+import java.sql.Date;
+
+
+
+
+
 /**
  *
  * @author veerakoskinen
@@ -13,6 +19,8 @@ public class Keskustelualue {
     private int id;
     private String otsikko;
     private Keskustelupalsta palsta;
+    private Date viimeinenViesti;
+    private int viestienMaara;
             
     public Keskustelualue() {
         
@@ -47,6 +55,21 @@ public class Keskustelualue {
     public void setPalsta(Keskustelupalsta palsta) {
         this.palsta = palsta;
     }
-    
+
+    public void setViestienMaara(int viestienMaara) {
+        this.viestienMaara = viestienMaara;
+    }
+
+    public void setViimeinenViesti(Date viimeinenViesti) {
+        this.viimeinenViesti = viimeinenViesti;
+    }
+
+    public int getViestienMaara() {
+        return viestienMaara;
+    }
+
+    public Date getViimeinenViesti() {
+        return viimeinenViesti;
+    }
     
 }

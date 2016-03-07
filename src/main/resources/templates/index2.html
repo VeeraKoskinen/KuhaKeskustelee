@@ -3,20 +3,53 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
     <head>
-        <title>Otsikko</title>
+        <title>KuhaKeskustelee</title>
         <meta charset="utf-8" />
+        
+        <style>
+            table, th, td{
+                border: 1px solid white;
+                border-collapse: collapse;
+            }
+            th, td{
+                padding: 5px;
+            }
+            th{
+                text-align: left;
+            }
+        </style>
     </head>
 
     <body>
-        <h1 th:text="${alue.otsikko}"></h1>
+        <h1>KuhaKeskustelee</h1>
+        <h2 th:text="${alue.otsikko}"></h2>
+        
+        <table style="width:100%">
+            <tr>
+                <th>Keskustelut </th>
+                <th>Viestien määrä </th>
+                <th>Viimeisin viesti </th>
+            </tr>
 
+            <tr th:each="keskustelu: ${keskustelut}">
+                <td>
+                    <a th:href="${'/alue/' + alue.id + '/keskustelu/' + keskustelu.id}" th:text="${keskustelu.otsikko}">1</a>
+                </td>
+                <td>
+                    <span th:text="${keskustelu.viestienMaara}">1</span>
+                </td>
+                <td>
+                    <span th:text="${keskustelu.viimeisinViesti}">esimerkki</span>
+                </td>
+            </tr>
+        </table>  
         
-
+        <h4>Aloita uusi keskustelu aiheesta:</h4>
+        <form th:action="${'/alue/' + alue.id}" method="POST">
+            <input type="text" name="Keskustelu"/>                
+                <button type="submit">Lisää keskustelu</button>
+        </form> 
         
-        
-        
-        
-
 
     </body>
 </html>

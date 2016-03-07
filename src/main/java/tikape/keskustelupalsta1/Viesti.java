@@ -6,6 +6,7 @@
 package tikape.keskustelupalsta1;
 
 
+import java.sql.Date;
 import java.sql.Timestamp;
 
 

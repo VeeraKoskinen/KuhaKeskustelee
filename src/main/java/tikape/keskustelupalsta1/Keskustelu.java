@@ -5,7 +5,7 @@
  */
 package tikape.keskustelupalsta1;
 import java.sql.*;
-import java.util.*;
+
 /**
  *
  * @author veerakoskinen
@@ -14,6 +14,8 @@ public class Keskustelu {
     private int id;
     private String otsikko;
     private Keskustelualue alue;
+    private java.sql.Date viimeisinViesti;
+    private int viestienMaara;
     
     public Keskustelu() {
         
@@ -47,5 +49,25 @@ public class Keskustelu {
     public void setAlue(Keskustelualue alue) {
         this.alue = alue;
     }
+
+    public void setViestienMaara(int viestienMaara) {
+        this.viestienMaara = viestienMaara;
+    }
+
+    public void setViimeisinViesti(Date viimeisinViesti) {
+        this.viimeisinViesti = viimeisinViesti;
+    }
+
+    public int getViestienMaara() {
+        return viestienMaara;
+    }
+
+    public Date getViimeisinViesti() {
+        return viimeisinViesti;
+    }
+    
+    
+    
+    
     
 }

@@ -15,9 +15,9 @@ import java.util.*;
 public class KeskustelualueDao implements Dao<Keskustelualue, Integer> {
 
     private Database data;
-    private Dao<Keskustelupalsta, Integer> palstaDao;
+    private KeskustelupalstaDao palstaDao;
 
-    public KeskustelualueDao(Database data, Dao<Keskustelupalsta, Integer> palstaDao) {
+    public KeskustelualueDao(Database data, KeskustelupalstaDao palstaDao) {
         this.data = data;
         this.palstaDao = palstaDao;
     }
@@ -50,11 +50,11 @@ public class KeskustelualueDao implements Dao<Keskustelualue, Integer> {
         return ka;
     }
 
-    @Override
+    
     public List<Keskustelualue> findAll() throws SQLException {
 
         Connection connection = data.getConnection();
-        PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Keskustelualue");
+        PreparedStatement stmt = connection.prepareStatement("SELECT a.Palsta AS Palsta, a.KeskustelualueId AS ID, a.otsikko AS Otsikko, COUNT(v.Id) AS Maara, MAX(v.saapumishetki) AS Päivä FROM Keskustelualue a LEFT JOIN Keskustelu k  ON a.KeskustelualueId = k.Keskustelualue LEFT JOIN Viesti v ON k.KeskusteluId=v.keskustelu GROUP BY a.KeskustelualueId ORDER BY v.saapumishetki DESC;");
         ResultSet rs = stmt.executeQuery();
 //
         Map<Integer, List<Keskustelualue>> palstanAlueet = new HashMap<>();
@@ -62,14 +62,20 @@ public class KeskustelualueDao implements Dao<Keskustelualue, Integer> {
         List<Keskustelualue> alueet = new ArrayList<>();
 
         while (rs.next()) {
-            Integer id = rs.getInt("KeskustelualueId");
+            Integer id = rs.getInt("ID");
             String otsikko = rs.getString("Otsikko");
 
             Keskustelualue ka = new Keskustelualue(id, otsikko);
             
             alueet.add(ka);
+            Integer maara = rs.getInt("Maara");
+            java.sql.Date paiva = rs.getDate("Päivä");
 
             Integer palsta = rs.getInt("Palsta");
+            
+            
+            ka.setViestienMaara(maara);
+            ka.setViimeinenViesti(paiva);
 
             if (!palstanAlueet.containsKey(palsta)) {
                 palstanAlueet.put(palsta, new ArrayList<>());
@@ -98,5 +104,15 @@ public class KeskustelualueDao implements Dao<Keskustelualue, Integer> {
     public void delete(Integer key) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    
+    public void lisaaKeskustelu(int alue, String otsikko) throws SQLException {
+        Connection connection = data.getConnection();
+        PreparedStatement stmt = connection.prepareStatement("INSERT INTO Keskustelu (Otsikko, Keskustelualue) VALUES(?,?);");
+        stmt.setInt(1, alue);
+        stmt.setString(2, otsikko);
+        stmt.executeUpdate();
+    }
+    
+   
 
 }
