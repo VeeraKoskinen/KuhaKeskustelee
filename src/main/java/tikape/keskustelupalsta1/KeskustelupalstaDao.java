@@ -71,6 +71,7 @@ public class KeskustelupalstaDao implements Dao<Keskustelupalsta, Integer> {
     }
     
     public void lisaaAlue(String otsikko) throws SQLException {
+        System.out.println("mentiin metodiin");
         Connection connection = data.getConnection();
         PreparedStatement stmt = connection.prepareStatement("INSERT INTO Keskustelualue (Otsikko, Palsta) VALUES(?,1)");
         stmt.setString(1, otsikko);

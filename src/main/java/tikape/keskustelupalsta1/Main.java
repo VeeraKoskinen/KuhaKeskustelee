@@ -48,7 +48,7 @@ public class Main {
         }, new ThymeleafTemplateEngine());
         post("/alue/:id", (req, res) -> {
             int id = Integer.parseInt(req.params(":id"));
-            aluedao.lisaaKeskustelu(id, req.queryParams("Keskustelu"));
+            aluedao.lisaaKeskustelu(id, req.queryParams("Otsikko"));
             res.redirect("/alue/" + id);
             return "Lisäys onnistui!";
         });

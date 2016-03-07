@@ -4,7 +4,9 @@
  * and open the template in the editor.
  */
 package tikape.keskustelupalsta1;
-import java.sql.*;
+
+import java.util.Date;
+
 
 /**
  *
@@ -14,7 +16,7 @@ public class Keskustelu {
     private int id;
     private String otsikko;
     private Keskustelualue alue;
-    private java.sql.Date viimeisinViesti;
+    private Date viimeisinViesti;
     private int viestienMaara;
     
     public Keskustelu() {

@@ -54,7 +54,7 @@ public class KeskustelualueDao implements Dao<Keskustelualue, Integer> {
     public List<Keskustelualue> findAll() throws SQLException {
 
         Connection connection = data.getConnection();
-        PreparedStatement stmt = connection.prepareStatement("SELECT a.Palsta AS Palsta, a.KeskustelualueId AS ID, a.otsikko AS Otsikko, COUNT(v.Id) AS Maara, MAX(v.saapumishetki) AS Päivä FROM Keskustelualue a LEFT JOIN Keskustelu k  ON a.KeskustelualueId = k.Keskustelualue LEFT JOIN Viesti v ON k.KeskusteluId=v.keskustelu GROUP BY a.KeskustelualueId ORDER BY v.saapumishetki DESC;");
+        PreparedStatement stmt = connection.prepareStatement("SELECT a.Palsta AS Palsta, a.KeskustelualueId AS ID, a.otsikko AS Otsikko, COUNT(v.Id) AS Maara, MAX(v.saapumishetki) AS Päivä FROM Keskustelualue a LEFT JOIN Keskustelu k  ON a.KeskustelualueId = k.Keskustelualue LEFT JOIN Viesti v ON k.KeskusteluId=v.keskustelu GROUP BY a.KeskustelualueId ORDER BY Päivä DESC;");
         ResultSet rs = stmt.executeQuery();
 //
         Map<Integer, List<Keskustelualue>> palstanAlueet = new HashMap<>();
@@ -108,8 +108,8 @@ public class KeskustelualueDao implements Dao<Keskustelualue, Integer> {
     public void lisaaKeskustelu(int alue, String otsikko) throws SQLException {
         Connection connection = data.getConnection();
         PreparedStatement stmt = connection.prepareStatement("INSERT INTO Keskustelu (Otsikko, Keskustelualue) VALUES(?,?);");
-        stmt.setInt(1, alue);
-        stmt.setString(2, otsikko);
+        stmt.setInt(2, alue);
+        stmt.setString(1, otsikko);
         stmt.executeUpdate();
     }
     
