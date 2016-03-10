@@ -1,0 +1,55 @@
+
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+    <head>
+        <title>KuhaKeskustelee</title>
+        <meta charset="utf-8" />
+        <style>
+            body {
+                background-color: pink;
+                font-family: comic sans ms;
+            }
+            /* unvisited link */
+            a:link {
+                color: red;
+            }
+
+            /* visited link */
+            a:visited {
+                color: green;
+            }
+
+            /* mouse over link */
+            a:hover {
+                color: hotpink;
+            }
+
+            /* selected link */
+            a:active {
+                color: blue;
+            }
+        </style>
+    </head>
+
+    <body>
+        <h1>KuhaKeskustelee</h1>
+        <h2 th:text="${alue.otsikko}"></h2>
+        <h2 th:text="${keskustelu.otsikko}"></h2>
+
+        <ul>
+            <li th:each="viesti: ${viestit}" th:text="${viesti.viestisisalto + '  -' + viesti.nimimerkki + '-'}">
+
+            </li>
+        </ul>
+
+
+        <form th:action="${'/alue/' + alue.id + '/keskustelu/' + keskustelu.id}" method="POST">
+            <textarea name="viestisisalto" rows="10" cols="50" placeholder="kirjoita viestisi tähän"></textarea>
+            <input type="text" name="nimimerkki"/>
+            <button type="submit">Lisää viesti</button>
+        </form>
+
+
+    </body>
+</html>

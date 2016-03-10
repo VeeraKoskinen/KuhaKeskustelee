@@ -5,11 +5,13 @@
     <head>
         <title>KuhaKeskustelee</title>
         <meta charset="utf-8" />
-        
+
         <style>
             table, th, td{
-                border: 1px solid white;
+                border: 1px solid whitesmoke;
                 border-collapse: collapse;
+                text-decoration-color: whitesmoke; 
+
             }
             th, td{
                 padding: 5px;
@@ -17,13 +19,37 @@
             th{
                 text-align: left;
             }
+            body {
+                background-color: darkblue;
+                font-family: comic sans ms;
+                color: violet;
+            }
+            /* unvisited link */
+            a:link {
+                color: whitesmoke;
+            }
+
+            /* visited link */
+            a:visited {
+                color: greenyellow;
+            }
+
+            /* mouse over link */
+            a:hover {
+                color: #002200;
+            }
+
+            /* selected link */
+            a:active {
+                color: lightblue;
+            }
         </style>
     </head>
 
     <body>
         <h1>KuhaKeskustelee</h1>
         <h2 th:text="${alue.otsikko}"></h2>
-        
+
         <table style="width:100%">
             <tr>
                 <th>Keskustelut </th>
@@ -43,13 +69,13 @@
                 </td>
             </tr>
         </table>  
-        
+
         <h4>Aloita uusi keskustelu aiheesta:</h4>
         <form th:action="${'/alue/' + alue.id}" method="POST">
             <input type="text" name="Otsikko"/>                
-                <button type="submit">Lisää keskustelu</button>
+            <button type="submit">Lisää keskustelu</button>
         </form> 
-        
+
 
     </body>
 </html>

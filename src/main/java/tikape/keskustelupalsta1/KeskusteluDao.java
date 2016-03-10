@@ -96,11 +96,16 @@ public class KeskusteluDao implements Dao<Keskustelu, Integer> {
     public void delete(Integer key) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
+    
     public List<Keskustelu> jarjestetytKeskustelut(int alue) throws SQLException {
+        return jarjestetytKeskustelut(alue, 0);
+    }
+
+    public List<Keskustelu> jarjestetytKeskustelut(int alue, int offset) throws SQLException {
         Connection connection = data.getConnection();
-        PreparedStatement stmt = connection.prepareStatement("SELECT k.KeskusteluId AS ID, k.otsikko AS Otsikko, COUNT(v.Id) AS Maara, MAX(v.saapumishetki) AS Päivä FROM Keskustelu k LEFT JOIN Viesti v ON k.KeskusteluId=v.keskustelu WHERE k.Keskustelualue = ? GROUP BY k.KeskusteluId ORDER BY DATE(MAX(v.saapumishetki)) DESC;");
+        PreparedStatement stmt = connection.prepareStatement("SELECT k.KeskusteluId AS ID, k.otsikko AS Otsikko, COUNT(v.Id) AS Maara, MAX(v.saapumishetki) AS Päivä FROM Keskustelu k LEFT JOIN Viesti v ON k.KeskusteluId=v.keskustelu WHERE k.Keskustelualue = ? GROUP BY k.KeskusteluId ORDER BY DATE(MAX(v.saapumishetki)) DESC LIMIT 10 OFFSET ?;");
         stmt.setInt(1, alue);
+        stmt.setInt(2, offset * 10);
         ResultSet rs = stmt.executeQuery();
        
 //

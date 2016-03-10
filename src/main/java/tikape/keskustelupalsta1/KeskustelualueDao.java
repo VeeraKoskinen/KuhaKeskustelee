@@ -49,12 +49,18 @@ public class KeskustelualueDao implements Dao<Keskustelualue, Integer> {
 
         return ka;
     }
-
     
     public List<Keskustelualue> findAll() throws SQLException {
+        return findAll(0);
+    }
+    
+
+    
+    public List<Keskustelualue> findAll(int offset) throws SQLException {
 
         Connection connection = data.getConnection();
-        PreparedStatement stmt = connection.prepareStatement("SELECT a.Palsta AS Palsta, a.KeskustelualueId AS ID, a.otsikko AS Otsikko, COUNT(v.Id) AS Maara, MAX(v.saapumishetki) AS Päivä FROM Keskustelualue a LEFT JOIN Keskustelu k  ON a.KeskustelualueId = k.Keskustelualue LEFT JOIN Viesti v ON k.KeskusteluId=v.keskustelu GROUP BY a.KeskustelualueId ORDER BY Päivä DESC;");
+        PreparedStatement stmt = connection.prepareStatement("SELECT a.Palsta AS Palsta, a.KeskustelualueId AS ID, a.otsikko AS Otsikko, COUNT(v.Id) AS Maara, MAX(v.saapumishetki) AS Päivä FROM Keskustelualue a LEFT JOIN Keskustelu k  ON a.KeskustelualueId = k.Keskustelualue LEFT JOIN Viesti v ON k.KeskusteluId=v.keskustelu GROUP BY a.KeskustelualueId ORDER BY Päivä DESC LIMIT 10 OFFSET ?;");
+        stmt.setInt(1, offset * 10);
         ResultSet rs = stmt.executeQuery();
 //
         Map<Integer, List<Keskustelualue>> palstanAlueet = new HashMap<>();

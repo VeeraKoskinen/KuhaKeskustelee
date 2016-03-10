@@ -9,7 +9,7 @@
         <meta charset="utf-8" />
         <style>
             table, th, td{
-                border: 1px solid white;
+                border: 1px solid black;
                 border-collapse: collapse;
             }
             th, td{
@@ -17,6 +17,30 @@
             }
             th{
                 text-align: left;
+            }
+
+            body {
+                background-color: greenyellow;
+                font-family: comic sans ms;
+            }
+            /* unvisited link */
+            a:link {
+                color: black;
+            }
+
+            /* visited link */
+            a:visited {
+                color: black;
+            }
+
+            /* mouse over link */
+            a:hover {
+                color: black;
+            }
+
+            /* selected link */
+            a:active {
+                color: black;
             }
         </style>
     </head>
@@ -43,19 +67,19 @@
                 </td>
             </tr>
         </table>
-        
+
         <h4>Lisää uusi aihe:</h4>
         <form action="/kuha" method="POST">
             <input type="text" name="Otsikko"/>                
-                   <button type="submit">Lisää alue</button>
+            <button type="submit">Lisää alue</button>
         </form>
-        
-        
+
+
         <h5>Käyttöohjeet</h5>
         <h6> &nbsp; &nbsp; &nbsp; 1. Valitse haluamasi keskustelualue viemällä hiiri alueen nimen päälle ja klikkaa hiiren vasemmalla näppäimellä.</h6> 
         <h6> &nbsp; &nbsp; &nbsp; 2. Tämän jälkeen näytöllesi avautuu näkymä aiheeseen liittyvistä keskusteluista. Voit valita haluamasi keskustelun viemällä hiiren keskustelun otsikon päälle ja klikkaamalla sitä hiiren vasemmalla näppäimellä. </h6> 
         <h6> &nbsp; &nbsp; &nbsp; 3. Seuraavaksi näet valitsemaasi keskusteluun liittyvät viestit vanhimmasta uusimpaan. Uuden viestin pääset kirjoittamaan keskusteluketjun lopussa olevaan viestikenttään. Uuden viestin lähettäminen vaatii nimimerkin syöttämistä sille varattuun tekstikenttään.</h6>
-        
+
 
 
     </body>
