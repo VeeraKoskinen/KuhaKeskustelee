@@ -10,6 +10,10 @@
                 background-color: pink;
                 font-family: comic sans ms;
             }
+            .reunustettu{
+                border: 1px solid lightcoral;
+                margin-bottom: 10px;
+            }
             /* unvisited link */
             a:link {
                 color: red;
@@ -29,6 +33,9 @@
             a:active {
                 color: blue;
             }
+            li{
+                list-style-type: none;
+            }
         </style>
     </head>
 
@@ -38,7 +45,7 @@
         <h2 th:text="${keskustelu.otsikko}"></h2>
 
         <ul>
-            <li th:each="viesti: ${viestit}" th:text="${viesti.viestisisalto + '  -' + viesti.nimimerkki + '-'}">
+            <li class="reunustettu" th:each="viesti: ${viestit}" th:text="${viesti.viestisisalto + '  -' + viesti.nimimerkki + '-'}">
 
             </li>
         </ul>
