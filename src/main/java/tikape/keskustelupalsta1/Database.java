@@ -53,10 +53,10 @@ public class Database<T> {
         ArrayList<String> lista = new ArrayList<>();
 
         // tietokantataulujen luomiseen tarvittavat komennot suoritusjärjestyksessä 
-        lista.add("DROP TABLE Viesti;");
-        lista.add("DROP TABLE Keskustelu;");
-        lista.add("DROP TABLE Keskustelualue;");
-        lista.add("DROP TABLE Keskustelupalsta;");
+        lista.add("DROP TABLE IF EXISTS Viesti;");
+        lista.add("DROP TABLE IF EXISTS Keskustelu;");
+        lista.add("DROP TABLE IF EXISTS Keskustelualue;");
+        lista.add("DROP TABLE IF EXISTS Keskustelupalsta;");
         // heroku käyttää SERIAL-avainsanaa uuden tunnuksen automaattiseen luomiseen
         lista.add("CREATE TABLE Keskustelupalsta (PalstaId serial PRIMARY KEY, Keskustelupalstan_Nimi varchar(100) NOT NULL);");
         lista.add("INSERT INTO Keskustelupalsta (Keskustelupalstan_Nimi) VALUES ('KuhaKeskustelee');");
