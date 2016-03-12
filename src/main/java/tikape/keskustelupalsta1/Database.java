@@ -55,7 +55,7 @@ public class Database<T> {
         // tietokantataulujen luomiseen tarvittavat komennot suoritusjärjestyksessä    
         // heroku käyttää SERIAL-avainsanaa uuden tunnuksen automaattiseen luomiseen
         lista.add("CREATE TABLE Keskustelupalsta (PalstaId serial PRIMARY KEY, Keskustelupalstan_Nimi varchar(100) NOT NULL);");
-        lista.add("INSERT INTO Keskustelupalsta (Keskustelupalstan_Nimi) VALUES (KuhaKeskustelee);");
+        lista.add("INSERT INTO Keskustelupalsta (Keskustelupalstan_Nimi) VALUES ('KuhaKeskustelee');");
         lista.add("CREATE TABLE Keskustelualue (KeskustelualueId serial PRIMARY KEY, Otsikko varchar(100) NOT NULL, Palsta integer NOT NULL, FOREIGN KEY (Palsta) REFERENCES Keskustelupalsta(PalstaId));");
         lista.add("CREATE TABLE Keskustelu (KeskusteluId serial PRIMARY KEY, Otsikko varchar(1000) NOT NULL, Keskustelualue integer NOT NULL, FOREIGN KEY (Keskustelualue) REFERENCES Keskustelualue(KeskustelualueId));");
         lista.add("CREATE TABLE Viesti (Id serial PRIMARY KEY, Keskustelu integer NOT NULL, Nimimerkki varchar(20) NOT NULL, Saapumishetki DATETIME DEFAULT(STRFTIME('%Y-%m-%d %H:%M:%f', 'NOW')), Viestisisältö varchar(100000) NOT NULL,FOREIGN KEY (Keskustelu) REFERENCES Keskustelu(KeskusteluId));");
