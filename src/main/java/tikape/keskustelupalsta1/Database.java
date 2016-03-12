@@ -52,7 +52,11 @@ public class Database<T> {
     private List<String> postgreLauseet() {
         ArrayList<String> lista = new ArrayList<>();
 
-        // tietokantataulujen luomiseen tarvittavat komennot suoritusjärjestyksessä    
+        // tietokantataulujen luomiseen tarvittavat komennot suoritusjärjestyksessä 
+        lista.add("DROP TABLE Viesti;");
+        lista.add("DROP TABLE Keskustelu;");
+        lista.add("DROP TABLE Keskustelualue;");
+        lista.add("DROP TABLE Keskustelupalsta;");
         // heroku käyttää SERIAL-avainsanaa uuden tunnuksen automaattiseen luomiseen
         lista.add("CREATE TABLE Keskustelupalsta (PalstaId serial PRIMARY KEY, Keskustelupalstan_Nimi varchar(100) NOT NULL);");
         lista.add("INSERT INTO Keskustelupalsta (Keskustelupalstan_Nimi) VALUES ('KuhaKeskustelee');");
