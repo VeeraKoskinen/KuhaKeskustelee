@@ -53,7 +53,7 @@
 
         <form th:action="${'/alue/' + alue.id + '/keskustelu/' + keskustelu.id}" method="POST">
             <textarea name="viestisisalto" rows="10" cols="50" placeholder="kirjoita viestisi tähän"></textarea>
-            <input type="text" name="nimimerkki"/>
+            <input type="text" name="nimimerkki" placeholder="nimimerkki"/>
             <button type="submit">Lisää viesti</button>
         </form>
 

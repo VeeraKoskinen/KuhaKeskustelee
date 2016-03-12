@@ -22,60 +22,64 @@ public class KeskustelupalstaDao implements Dao<Keskustelupalsta, Integer> {
 
     @Override
     public Keskustelupalsta findOne(Integer key) throws SQLException {
-        Connection connection = data.getConnection();
-        PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Keskustelupalsta WHERE PalstaId = ?");
-        stmt.setObject(1, key);
+        try (Connection connection = data.getConnection()) {
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Keskustelupalsta WHERE PalstaId = ?");
+            stmt.setObject(1, key);
 
-        ResultSet rs = stmt.executeQuery();
-        boolean hasOne = rs.next();
-        if (!hasOne) {
-            return null;
-        }
+            ResultSet rs = stmt.executeQuery();
+            boolean hasOne = rs.next();
+            if (!hasOne) {
+                return null;
+            }
 
-        Integer id = rs.getInt("PalstaId");
-        String nimi = rs.getString("Keskustelupalstan_Nimi");
-
-        Keskustelupalsta k = new Keskustelupalsta(id, nimi);
-
-        rs.close();
-        stmt.close();
-        connection.close();
-
-        return k;
-    }
-
-    
-    public List<Keskustelupalsta> findAll() throws SQLException {
-        Connection connection = data.getConnection();
-        PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Keskustelupalsta");
-
-        ResultSet rs = stmt.executeQuery();
-        List<Keskustelupalsta> palstat = new ArrayList<>();
-        while (rs.next()) {
             Integer id = rs.getInt("PalstaId");
             String nimi = rs.getString("Keskustelupalstan_Nimi");
 
-            palstat.add(new Keskustelupalsta(id, nimi));
+            Keskustelupalsta k = new Keskustelupalsta(id, nimi);
+
+            rs.close();
+            stmt.close();
+
+            return k;
         }
 
-        rs.close();
-        stmt.close();
-        connection.close();
+    }
 
-        return palstat;
+    public List<Keskustelupalsta> findAll() throws SQLException {
+        try (Connection connection = data.getConnection()) {
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Keskustelupalsta");
+
+            ResultSet rs = stmt.executeQuery();
+            List<Keskustelupalsta> palstat = new ArrayList<>();
+            while (rs.next()) {
+                Integer id = rs.getInt("PalstaId");
+                String nimi = rs.getString("Keskustelupalstan_Nimi");
+
+                palstat.add(new Keskustelupalsta(id, nimi));
+            }
+
+            rs.close();
+            stmt.close();
+
+            return palstat;
+        }
     }
 
     @Override
     public void delete(Integer key) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
     public void lisaaAlue(String otsikko) throws SQLException {
-        System.out.println("mentiin metodiin");
+        
         Connection connection = data.getConnection();
         PreparedStatement stmt = connection.prepareStatement("INSERT INTO Keskustelualue (Otsikko, Palsta) VALUES(?,1)");
         stmt.setString(1, otsikko);
         stmt.executeUpdate();
+        
+        
+        stmt.close();
+        connection.close();
     }
 
 }
